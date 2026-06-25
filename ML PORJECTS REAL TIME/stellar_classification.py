@@ -10,6 +10,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay
+import joblib
 
 def main():
     # --- 1. Project Setup and Data Acquisition ---
@@ -114,6 +115,12 @@ def main():
     plt.title('SVM Confusion Matrix')
     plt.savefig('plots/svm_confusion_matrix.png')
     plt.close()
+
+    # --- 5. Save the Model ---
+    print("\n--- 5. Saving Model ---")
+    model_filename = 'rf_model.pkl'
+    joblib.dump(rf_pipeline, model_filename)
+    print(f"Random Forest model saved to {model_filename}")
 
     print("\n--- Project Execution Complete ---")
     print("Check the 'plots' folder for visualizations.")
