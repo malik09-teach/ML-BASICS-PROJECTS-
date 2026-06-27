@@ -8,19 +8,11 @@ st.title("🌟 Stellar Classification Predictor")
 st.write("Enter the characteristics of a star below to predict its type using the trained Random Forest model.")
 
 # Load model and preprocessor
-@st.cache_resource
-def load_model_and_preprocessor():
-    try:
-        with open('svm_model.pkl', 'rb') as f:
-            model = pickle.load(f)
-        with open('star_preprocessor.pkl', 'rb') as f:
-            preprocessor = pickle.load(f)
-        return model, preprocessor
-    except Exception as e:
-        st.error(f"Error loading model/preprocessor: {e}. Make sure to run stellar_classification.py first!")
-        return None, None
+with open('svm_model.pkl', 'rb') as f:
+    model = pickle.load(f)
+with open('star_preprocessor.pkl', 'rb') as f:
+    preprocessor = pickle.load(f)
 
-model, preprocessor = load_model_and_preprocessor()
 
 st.sidebar.header("Input Star Characteristics")
 
