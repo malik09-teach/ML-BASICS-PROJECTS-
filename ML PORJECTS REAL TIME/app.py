@@ -58,7 +58,7 @@ inputs = [
 demo = gr.Interface(
     fn=predict_star, 
     inputs=inputs,
-    outputs=gr.Textbox(label="Predicted Star Type", show_copy_button=True),
+    outputs=gr.Textbox(label="Predicted Star Type"),
     title="🌟 Stellar Classification Predictor",
     description="Enter the characteristics of a star below to predict its type using the trained SVM pipeline.",
     theme=gr.themes.Soft()
