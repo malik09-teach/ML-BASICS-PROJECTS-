@@ -7,17 +7,20 @@ st.set_page_config(page_title="Stellar Classification", layout="centered")
 st.title("🌟 Stellar Classification Predictor")
 st.write("Enter the characteristics of a star below to predict its type using the trained Random Forest model.")
 
-# Load model
+# Load model and preprocessor
 @st.cache_resource
-def load_model():
+def load_model_and_preprocessor():
     try:
         with open('svm_model.pkl', 'rb') as f:
-            return pickle.load(f)
+            model = pickle.load(f)
+        with open('star_preprocessor.pkl', 'rb') as f:
+            preprocessor = pickle.load(f)
+        return model, preprocessor
     except Exception as e:
-        st.error(f"Error loading model: {e}. Make sure to run stellar_classification.py first!")
-        return None
+        st.error(f"Error loading model/preprocessor: {e}. Make sure to run stellar_classification.py first!")
+        return None, None
 
-model = load_model()
+model, preprocessor = load_model_and_preprocessor()
 
 st.sidebar.header("Input Star Characteristics")
 
@@ -47,8 +50,12 @@ st.write("### Your Input Data")
 st.dataframe(input_data)
 
 if st.button("Predict Star Type", type="primary"):
-    if model is not None:
-        prediction = model.predict(input_data)[0]
+    if model is not None and preprocessor is not None:
+        # Scale the input data using the preprocessor
+        scaled_input = preprocessor.transform(input_data)
+        
+        # Make prediction
+        prediction = model.predict(scaled_input)[0]
         
         star_types = {
             0: "Brown Dwarf",

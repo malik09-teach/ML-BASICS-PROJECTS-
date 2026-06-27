@@ -118,15 +118,26 @@ def main():
 
     # --- 5. Save the Model ---
     print("\n--- 5. Saving Model ---")
+    
+    # Save the fitted preprocessor from one of the pipelines
+    preprocessor_filename = 'star_preprocessor.pkl'
+    fitted_preprocessor = rf_pipeline.named_steps['preprocessor']
+    with open(preprocessor_filename, 'wb') as f:
+        pickle.dump(fitted_preprocessor, f)
+    print(f"Preprocessor saved to {preprocessor_filename}")
+
+    # Save the base RF classifier
     model_filename = 'rf_model.pkl'
+    fitted_rf = rf_pipeline.named_steps['classifier']
     with open(model_filename, 'wb') as f:
-        pickle.dump(rf_pipeline, f)
+        pickle.dump(fitted_rf, f)
     print(f"Random Forest model saved to {model_filename}")
 
-    # Also save SVM model since app.py is looking for svm_model.pkl
+    # Save the base SVM classifier
     svm_model_filename = 'svm_model.pkl'
+    fitted_svm = svm_pipeline.named_steps['classifier']
     with open(svm_model_filename, 'wb') as f:
-        pickle.dump(svm_pipeline, f)
+        pickle.dump(fitted_svm, f)
     print(f"SVM model saved to {svm_model_filename}")
 
     print("\n--- Project Execution Complete ---")
