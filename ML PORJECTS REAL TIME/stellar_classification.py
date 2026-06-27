@@ -10,7 +10,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay
-import joblib
+import pickle
 
 def main():
     # --- 1. Project Setup and Data Acquisition ---
@@ -119,8 +119,15 @@ def main():
     # --- 5. Save the Model ---
     print("\n--- 5. Saving Model ---")
     model_filename = 'rf_model.pkl'
-    joblib.dump(rf_pipeline, model_filename)
+    with open(model_filename, 'wb') as f:
+        pickle.dump(rf_pipeline, f)
     print(f"Random Forest model saved to {model_filename}")
+
+    # Also save SVM model since app.py is looking for svm_model.pkl
+    svm_model_filename = 'svm_model.pkl'
+    with open(svm_model_filename, 'wb') as f:
+        pickle.dump(svm_pipeline, f)
+    print(f"SVM model saved to {svm_model_filename}")
 
     print("\n--- Project Execution Complete ---")
     print("Check the 'plots' folder for visualizations.")

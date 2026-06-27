@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import joblib
+import pickle
 
 st.set_page_config(page_title="Stellar Classification", layout="centered")
 
@@ -11,7 +11,8 @@ st.write("Enter the characteristics of a star below to predict its type using th
 @st.cache_resource
 def load_model():
     try:
-        return joblib.load('svm_model.pkl')
+        with open('svm_model.pkl', 'rb') as f:
+            return pickle.load(f)
     except Exception as e:
         st.error(f"Error loading model: {e}. Make sure to run stellar_classification.py first!")
         return None
