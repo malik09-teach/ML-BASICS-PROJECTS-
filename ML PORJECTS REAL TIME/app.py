@@ -11,7 +11,7 @@ st.write("Enter the characteristics of a star below to predict its type using th
 @st.cache_resource
 def load_model():
     try:
-        return joblib.load('rf_model.pkl')
+        return joblib.load('svm_model.pkl')
     except Exception as e:
         st.error(f"Error loading model: {e}. Make sure to run stellar_classification.py first!")
         return None
